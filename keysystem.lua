@@ -1,202 +1,219 @@
--- SCRIPT LOGIC SELF | LOGIC MENU LOADER + UI (FIXED)
+--// LOGIC MENU | SYNAPSE STYLE PREMIUM LOADER
 
 local Players = game:GetService("Players")
-local UserInputService = game:GetService("UserInputService")
 local TweenService = game:GetService("TweenService")
+local UserInputService = game:GetService("UserInputService")
 
 local player = Players.LocalPlayer
-local playerGui = player:WaitForChild("PlayerGui")
+local gui = Instance.new("ScreenGui")
+gui.Name = "LogicSynapseLoader"
+gui.ResetOnSpawn = false
+gui.Parent = player:WaitForChild("PlayerGui")
 
--- CONFIG
-local SCRIPT_URL = "https://raw.githubusercontent.com/lsxast3-ui/Script-Logic-Self/main/NexusMenu.lua"
+--// THEME
+local BG = Color3.fromRGB(15,15,18)
+local CARD = Color3.fromRGB(22,22,26)
+local ACCENT = Color3.fromRGB(0,170,255)
+local TEXT = Color3.fromRGB(255,255,255)
+local SUB = Color3.fromRGB(160,160,170)
 
+--// MAIN CONTAINER
+local main = Instance.new("Frame")
+main.Size = UDim2.new(0, 0, 0, 0)
+main.Position = UDim2.new(0.5,0,0.5,0)
+main.BackgroundColor3 = BG
+main.BorderSizePixel = 0
+main.Parent = gui
+
+Instance.new("UICorner", main).CornerRadius = UDim.new(0,14)
+
+local stroke = Instance.new("UIStroke")
+stroke.Color = Color3.fromRGB(40,40,50)
+stroke.Thickness = 1
+stroke.Parent = main
+
+TweenService:Create(main, TweenInfo.new(0.45, Enum.EasingStyle.Quint), {
+	Size = UDim2.new(0, 460,0, 260),
+	Position = UDim2.new(0.5,-230,0.5,-130)
+}):Play()
+
+--// TOP BAR
+local top = Instance.new("Frame")
+top.Size = UDim2.new(1,0,0,50)
+top.BackgroundColor3 = CARD
+top.Parent = main
+
+Instance.new("UICorner", top).CornerRadius = UDim.new(0,14)
+
+local title = Instance.new("TextLabel")
+title.Size = UDim2.new(1,-20,1,0)
+title.Position = UDim2.new(0,12,0,0)
+title.BackgroundTransparency = 1
+title.Text = "LOGIC SYNAPSE"
+title.TextColor3 = TEXT
+title.Font = Enum.Font.GothamBold
+title.TextSize = 16
+title.TextXAlignment = Enum.TextXAlignment.Left
+title.Parent = top
+
+--// CLOSE
+local close = Instance.new("TextButton")
+close.Size = UDim2.new(0,40,0,40)
+close.Position = UDim2.new(1,-45,0.5,-20)
+close.BackgroundTransparency = 1
+close.Text = "✕"
+close.TextColor3 = Color3.fromRGB(255,90,90)
+close.Font = Enum.Font.GothamBold
+close.TextSize = 14
+close.Parent = top
+
+close.MouseButton1Click:Connect(function()
+	TweenService:Create(main, TweenInfo.new(0.25), {
+		Size = UDim2.new(0,0,0,0)
+	}):Play()
+	task.wait(0.25)
+	gui:Destroy()
+end)
+
+--// SUB TEXT
+local sub = Instance.new("TextLabel")
+sub.Size = UDim2.new(1,0,0,20)
+sub.Position = UDim2.new(0,0,0,70)
+sub.BackgroundTransparency = 1
+sub.Text = "Secure Access Required"
+sub.TextColor3 = SUB
+sub.Font = Enum.Font.Gotham
+sub.TextSize = 13
+sub.Parent = main
+
+--// KEY BOX
+local keyBox = Instance.new("TextBox")
+keyBox.Size = UDim2.new(0.82,0,0,40)
+keyBox.Position = UDim2.new(0.09,0,0.42,0)
+keyBox.PlaceholderText = "Enter License Key..."
+keyBox.Text = ""
+keyBox.BackgroundColor3 = CARD
+keyBox.TextColor3 = TEXT
+keyBox.Font = Enum.Font.Gotham
+keyBox.TextSize = 14
+keyBox.Parent = main
+
+Instance.new("UICorner", keyBox).CornerRadius = UDim.new(0,10)
+
+local keyStroke = Instance.new("UIStroke")
+keyStroke.Color = Color3.fromRGB(35,35,45)
+keyStroke.Parent = keyBox
+
+--// BUTTON
+local button = Instance.new("TextButton")
+button.Size = UDim2.new(0.82,0,0,40)
+button.Position = UDim2.new(0.09,0,0.67,0)
+button.BackgroundColor3 = ACCENT
+button.Text = "AUTHENTICATE"
+button.TextColor3 = TEXT
+button.Font = Enum.Font.GothamBold
+button.TextSize = 14
+button.Parent = main
+
+Instance.new("UICorner", button).CornerRadius = UDim.new(0,10)
+
+--// STATUS
+local status = Instance.new("TextLabel")
+status.Size = UDim2.new(1,0,0,20)
+status.Position = UDim2.new(0,0,0,210)
+status.BackgroundTransparency = 1
+status.Text = "Waiting for input..."
+status.TextColor3 = SUB
+status.Font = Enum.Font.Gotham
+status.TextSize = 12
+status.Parent = main
+
+--// MINI ICON (SYNAPSE STYLE L)
+local mini = Instance.new("TextButton")
+mini.Size = UDim2.new(0,52,0,52)
+mini.Position = UDim2.new(0,25,0.5,-26)
+mini.BackgroundColor3 = CARD
+mini.Text = ""
+mini.Visible = false
+mini.Parent = gui
+
+Instance.new("UICorner", mini).CornerRadius = UDim.new(1,0)
+
+local miniStroke = Instance.new("UIStroke")
+miniStroke.Color = ACCENT
+miniStroke.Thickness = 2
+miniStroke.Parent = mini
+
+-- neon L icon
+local l1 = Instance.new("Frame")
+l1.Size = UDim2.new(0,4,0.6,0)
+l1.Position = UDim2.new(0.35,0,0.2,0)
+l1.BackgroundColor3 = ACCENT
+l1.BorderSizePixel = 0
+l1.Parent = mini
+
+local l2 = Instance.new("Frame")
+l2.Size = UDim2.new(0.35,0,0,4)
+l2.Position = UDim2.new(0.35,0,0.8,0)
+l2.BackgroundColor3 = ACCENT
+l2.BorderSizePixel = 0
+l2.Parent = mini
+
+--// KEY SYSTEM
 local VALID_KEYS = {
 	["123"] = true,
 	["VIP"] = true,
 	["999"] = true
 }
 
--- COLORS
-local BG_MAIN = Color3.fromRGB(20,20,23)
-local BG_TOPBAR = Color3.fromRGB(28,28,32)
-local BG_INPUT = Color3.fromRGB(24,24,28)
+button.MouseButton1Click:Connect(function()
 
-local ACCENT = Color3.fromRGB(0,162,255)
+	local key = string.gsub(keyBox.Text, " ", "")
 
-local TEXT_MAIN = Color3.fromRGB(255,255,255)
-local TEXT_DARK = Color3.fromRGB(150,150,155)
+	status.Text = "Authenticating..."
+	status.TextColor3 = ACCENT
 
--- GUI
-local gui = Instance.new("ScreenGui")
-gui.Name = "LogicMenuLoader"
-gui.ResetOnSpawn = false
-gui.Parent = playerGui
+	TweenService:Create(status, TweenInfo.new(0.2), {
+		TextTransparency = 0
+	}):Play()
 
--- MAIN FRAME
-local main = Instance.new("Frame")
-main.Size = UDim2.new(0,0,0,0)
-main.Position = UDim2.new(0.5,0,0.5,0)
-main.BackgroundColor3 = BG_MAIN
-main.Parent = gui
+	task.wait(0.6)
 
-Instance.new("UICorner", main).CornerRadius = UDim.new(0,12)
+	if VALID_KEYS[key] then
+		status.Text = "Access Granted"
+		status.TextColor3 = Color3.fromRGB(120,255,120)
 
-local mainStroke = Instance.new("UIStroke")
-mainStroke.Color = Color3.fromRGB(45,45,50)
-mainStroke.Parent = main
+		task.wait(0.5)
 
--- OPEN ANIMATION
-TweenService:Create(main, TweenInfo.new(0.3, Enum.EasingStyle.Back), {
-	Size = UDim2.new(0,420,0,230),
-	Position = UDim2.new(0.5,-210,0.5,-115)
-}):Play()
+		mini.Visible = true
+		main.Visible = false
 
--- TOPBAR
-local topBar = Instance.new("Frame")
-topBar.Size = UDim2.new(1,0,0,45)
-topBar.BackgroundColor3 = BG_TOPBAR
-topBar.Parent = main
-
-Instance.new("UICorner", topBar).CornerRadius = UDim.new(0,12)
-
--- TITLE
-local title = Instance.new("TextLabel")
-title.BackgroundTransparency = 1
-title.Size = UDim2.new(1,-50,1,0)
-title.Position = UDim2.new(0,15,0,0)
-
-title.Text = "LOGIC MENU"
-title.TextColor3 = TEXT_MAIN
-title.Font = Enum.Font.GothamBold
-title.TextSize = 15
-title.TextXAlignment = Enum.TextXAlignment.Left
-title.Parent = topBar
-
--- CLOSE
-local closeBtn = Instance.new("TextButton")
-closeBtn.Size = UDim2.new(0,40,0,40)
-closeBtn.Position = UDim2.new(1,-45,0.5,-20)
-closeBtn.BackgroundTransparency = 1
-closeBtn.Text = "✕"
-closeBtn.TextColor3 = Color3.fromRGB(255,100,100)
-closeBtn.Font = Enum.Font.GothamBold
-closeBtn.TextSize = 14
-closeBtn.Parent = topBar
-
-closeBtn.MouseButton1Click:Connect(function()
-	gui:Destroy()
+	else
+		status.Text = "Invalid Key"
+		status.TextColor3 = Color3.fromRGB(255,80,80)
+	end
 end)
 
--- SUBTITLE
-local subtitle = Instance.new("TextLabel")
-subtitle.BackgroundTransparency = 1
-subtitle.Size = UDim2.new(1,0,0,25)
-subtitle.Position = UDim2.new(0,0,0,65)
-subtitle.Text = "Authentication Required"
-subtitle.TextColor3 = TEXT_DARK
-subtitle.Font = Enum.Font.Gotham
-subtitle.TextSize = 13
-subtitle.Parent = main
+-- restore
+mini.MouseButton1Click:Connect(function()
+	main.Visible = true
+	mini.Visible = false
+end)
 
--- KEY BOX
-local keyBox = Instance.new("TextBox")
-keyBox.Size = UDim2.new(0.85,0,0,42)
-keyBox.Position = UDim2.new(0.075,0,0.45,0)
-keyBox.PlaceholderText = "Enter Access Key..."
-keyBox.Font = Enum.Font.Gotham
-keyBox.TextSize = 14
-keyBox.BackgroundColor3 = BG_INPUT
-keyBox.TextColor3 = TEXT_MAIN
-keyBox.Parent = main
+-- drag
+local dragging, start, startPos
 
-Instance.new("UICorner", keyBox).CornerRadius = UDim.new(0,8)
-
--- BUTTON
-local unlockBtn = Instance.new("TextButton")
-unlockBtn.Size = UDim2.new(0.85,0,0,40)
-unlockBtn.Position = UDim2.new(0.075,0,0.67,0)
-unlockBtn.Text = "UNLOCK"
-unlockBtn.Font = Enum.Font.GothamBold
-unlockBtn.TextSize = 14
-unlockBtn.BackgroundColor3 = ACCENT
-unlockBtn.TextColor3 = TEXT_MAIN
-unlockBtn.Parent = main
-
-Instance.new("UICorner", unlockBtn).CornerRadius = UDim.new(0,8)
-
--- STATUS
-local status = Instance.new("TextLabel")
-status.BackgroundTransparency = 1
-status.Size = UDim2.new(0.85,0,0,20)
-status.Position = UDim2.new(0.075,0,0.88,0)
-status.Text = "Status : Waiting Key"
-status.TextColor3 = TEXT_DARK
-status.Font = Enum.Font.Gotham
-status.TextSize = 12
-status.TextXAlignment = Enum.TextXAlignment.Left
-status.Parent = main
-
-------------------------------------------------
--- MINI BUTTON (CUSTOM ICON L FIXED)
-------------------------------------------------
-
-local miniButton = Instance.new("TextButton")
-miniButton.Size = UDim2.new(0,50,0,50)
-miniButton.Position = UDim2.new(0,30,0.5,-25)
-miniButton.BackgroundColor3 = Color3.fromRGB(18,18,20)
-miniButton.Text = ""
-miniButton.Visible = false
-miniButton.Parent = gui
-
-Instance.new("UICorner", miniButton).CornerRadius = UDim.new(1,0)
-
-local miniStroke = Instance.new("UIStroke")
-miniStroke.Color = ACCENT
-miniStroke.Thickness = 1.5
-miniStroke.Parent = miniButton
-
--- ICON HOLDER
-local iconHolder = Instance.new("Frame")
-iconHolder.Size = UDim2.new(0,18,0,18)
-iconHolder.Position = UDim2.new(0.5,-9,0.5,-9)
-iconHolder.BackgroundTransparency = 1
-iconHolder.Parent = miniButton
-
--- L SHAPE ICON
-local bar1 = Instance.new("Frame")
-bar1.Size = UDim2.new(0,4,1,0)
-bar1.BackgroundColor3 = ACCENT
-bar1.BorderSizePixel = 0
-bar1.Parent = iconHolder
-
-local bar2 = Instance.new("Frame")
-bar2.Size = UDim2.new(1,0,0,4)
-bar2.Position = UDim2.new(0,0,1,-4)
-bar2.BackgroundColor3 = ACCENT
-bar2.BorderSizePixel = 0
-bar2.Parent = iconHolder
-
-------------------------------------------------
--- DRAG
-------------------------------------------------
-
-local dragging, dragStart, startPos
-
-topBar.InputBegan:Connect(function(input)
-	if input.UserInputType == Enum.UserInputType.MouseButton1 then
+top.InputBegan:Connect(function(i)
+	if i.UserInputType == Enum.UserInputType.MouseButton1 then
 		dragging = true
-		dragStart = input.Position
+		start = i.Position
 		startPos = main.Position
 	end
 end)
 
-topBar.InputEnded:Connect(function()
-	dragging = false
-end)
-
-UserInputService.InputChanged:Connect(function(input)
-	if dragging and input.UserInputType == Enum.UserInputType.MouseMovement then
-		local delta = input.Position - dragStart
+UserInputService.InputChanged:Connect(function(i)
+	if dragging and i.UserInputType == Enum.UserInputType.MouseMovement then
+		local delta = i.Position - start
 		main.Position = UDim2.new(
 			startPos.X.Scale,
 			startPos.X.Offset + delta.X,
@@ -206,37 +223,8 @@ UserInputService.InputChanged:Connect(function(input)
 	end
 end)
 
-------------------------------------------------
--- KEY SYSTEM (FIXED)
-------------------------------------------------
-
-unlockBtn.MouseButton1Click:Connect(function()
-
-	local key = string.gsub(keyBox.Text, " ", "")
-
-	status.Text = "Status : Checking..."
-	status.TextColor3 = ACCENT
-
-	task.wait(0.5)
-
-	if VALID_KEYS[key] == true then
-
-		status.Text = "Status : Access Granted"
-		status.TextColor3 = Color3.fromRGB(100,255,100)
-
-		shared.AUTHORIZED = true
-
-		task.wait(0.5)
-
-		local source = game:HttpGet(SCRIPT_URL)
-		loadstring(source)()
-
-		gui:Destroy()
-
-	else
-
-		status.Text = "Status : Invalid Key"
-		status.TextColor3 = Color3.fromRGB(255,100,100)
-
+UserInputService.InputEnded:Connect(function(i)
+	if i.UserInputType == Enum.UserInputType.MouseButton1 then
+		dragging = false
 	end
 end)
