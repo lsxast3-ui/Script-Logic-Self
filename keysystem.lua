@@ -9,7 +9,7 @@ local playerGui = player:WaitForChild("PlayerGui")
 local SCRIPT_URL = "https://raw.githubusercontent.com/lsxast3-ui/Script-Logic-Self/main/NexusMenu.lua"
 
 local VALID_KEYS = {
-	["NEXUS-123"] = true,
+	["123"] = true,
 	["VIP-ACCESS"] = true,
 	["ADMIN-999"] = true
 }
