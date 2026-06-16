@@ -1,3 +1,7 @@
+if not shared.AUTHORIZED then
+    return
+end
+
 local Players = game:GetService("Players")
 local UserInputService = game:GetService("UserInputService")
 local TweenService = game:GetService("TweenService")
