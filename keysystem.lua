@@ -154,7 +154,47 @@ local miniButton = Instance.new("TextButton")
 miniButton.Size = UDim2.new(0,50,0,50)
 miniButton.Position = UDim2.new(0,30,0.5,-25)
 
-miniButton.Text = "L"
+-- MINI BUTTON (CUSTOM ICON L STYLE)
+
+local miniButton = Instance.new("TextButton")
+miniButton.Size = UDim2.new(0,50,0,50)
+miniButton.Position = UDim2.new(0,30,0.5,-25)
+
+miniButton.BackgroundColor3 = Color3.fromRGB(18,18,20)
+miniButton.Text = ""
+
+miniButton.Visible = false
+miniButton.Parent = gui
+
+Instance.new("UICorner", miniButton).CornerRadius = UDim.new(1,0)
+
+local stroke = Instance.new("UIStroke")
+stroke.Color = ACCENT
+stroke.Thickness = 1.5
+stroke.Parent = miniButton
+
+-- ICON HOLDER
+local iconHolder = Instance.new("Frame")
+iconHolder.Size = UDim2.new(0,18,0,18)
+iconHolder.Position = UDim2.new(0.5,-9,0.5,-9)
+iconHolder.BackgroundTransparency = 1
+iconHolder.Parent = miniButton
+
+-- VERTICAL BAR (L shape)
+local bar1 = Instance.new("Frame")
+bar1.Size = UDim2.new(0,4,1,0)
+bar1.Position = UDim2.new(0,0,0,0)
+bar1.BackgroundColor3 = ACCENT
+bar1.BorderSizePixel = 0
+bar1.Parent = iconHolder
+
+-- HORIZONTAL BAR (L shape)
+local bar2 = Instance.new("Frame")
+bar2.Size = UDim2.new(1,0,0,4)
+bar2.Position = UDim2.new(0,0,1,-4)
+bar2.BackgroundColor3 = ACCENT
+bar2.BorderSizePixel = 0
+bar2.Parent = iconHolder
 miniButton.Font = Enum.Font.GothamBlack
 miniButton.TextSize = 24
 
