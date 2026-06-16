@@ -1,4 +1,4 @@
--- SCRIPT LOGIC SELF | LOGIC MENU LOADER + UI
+-- SCRIPT LOGIC SELF | LOGIC MENU LOADER + UI (FIXED)
 
 local Players = game:GetService("Players")
 local UserInputService = game:GetService("UserInputService")
@@ -41,9 +41,9 @@ main.Parent = gui
 
 Instance.new("UICorner", main).CornerRadius = UDim.new(0,12)
 
-local stroke = Instance.new("UIStroke")
-stroke.Color = Color3.fromRGB(45,45,50)
-stroke.Parent = main
+local mainStroke = Instance.new("UIStroke")
+mainStroke.Color = Color3.fromRGB(45,45,50)
+mainStroke.Parent = main
 
 -- OPEN ANIMATION
 TweenService:Create(main, TweenInfo.new(0.3, Enum.EasingStyle.Back), {
@@ -70,20 +70,17 @@ title.TextColor3 = TEXT_MAIN
 title.Font = Enum.Font.GothamBold
 title.TextSize = 15
 title.TextXAlignment = Enum.TextXAlignment.Left
-
 title.Parent = topBar
 
--- CLOSE BUTTON
+-- CLOSE
 local closeBtn = Instance.new("TextButton")
 closeBtn.Size = UDim2.new(0,40,0,40)
 closeBtn.Position = UDim2.new(1,-45,0.5,-20)
-
 closeBtn.BackgroundTransparency = 1
 closeBtn.Text = "✕"
 closeBtn.TextColor3 = Color3.fromRGB(255,100,100)
 closeBtn.Font = Enum.Font.GothamBold
 closeBtn.TextSize = 14
-
 closeBtn.Parent = topBar
 
 closeBtn.MouseButton1Click:Connect(function()
@@ -95,26 +92,21 @@ local subtitle = Instance.new("TextLabel")
 subtitle.BackgroundTransparency = 1
 subtitle.Size = UDim2.new(1,0,0,25)
 subtitle.Position = UDim2.new(0,0,0,65)
-
 subtitle.Text = "Authentication Required"
 subtitle.TextColor3 = TEXT_DARK
 subtitle.Font = Enum.Font.Gotham
 subtitle.TextSize = 13
-
 subtitle.Parent = main
 
 -- KEY BOX
 local keyBox = Instance.new("TextBox")
 keyBox.Size = UDim2.new(0.85,0,0,42)
 keyBox.Position = UDim2.new(0.075,0,0.45,0)
-
 keyBox.PlaceholderText = "Enter Access Key..."
 keyBox.Font = Enum.Font.Gotham
 keyBox.TextSize = 14
-
 keyBox.BackgroundColor3 = BG_INPUT
 keyBox.TextColor3 = TEXT_MAIN
-
 keyBox.Parent = main
 
 Instance.new("UICorner", keyBox).CornerRadius = UDim.new(0,8)
@@ -123,14 +115,11 @@ Instance.new("UICorner", keyBox).CornerRadius = UDim.new(0,8)
 local unlockBtn = Instance.new("TextButton")
 unlockBtn.Size = UDim2.new(0.85,0,0,40)
 unlockBtn.Position = UDim2.new(0.075,0,0.67,0)
-
 unlockBtn.Text = "UNLOCK"
 unlockBtn.Font = Enum.Font.GothamBold
 unlockBtn.TextSize = 14
-
 unlockBtn.BackgroundColor3 = ACCENT
 unlockBtn.TextColor3 = TEXT_MAIN
-
 unlockBtn.Parent = main
 
 Instance.new("UICorner", unlockBtn).CornerRadius = UDim.new(0,8)
@@ -140,67 +129,22 @@ local status = Instance.new("TextLabel")
 status.BackgroundTransparency = 1
 status.Size = UDim2.new(0.85,0,0,20)
 status.Position = UDim2.new(0.075,0,0.88,0)
-
 status.Text = "Status : Waiting Key"
 status.TextColor3 = TEXT_DARK
 status.Font = Enum.Font.Gotham
 status.TextSize = 12
 status.TextXAlignment = Enum.TextXAlignment.Left
-
 status.Parent = main
 
--- MINIMIZED BUTTON (LOGO L)
-local miniButton = Instance.new("TextButton")
-miniButton.Size = UDim2.new(0,50,0,50)
-miniButton.Position = UDim2.new(0,30,0.5,-25)
-
--- MINI BUTTON (CUSTOM ICON L STYLE)
+------------------------------------------------
+-- MINI BUTTON (CUSTOM ICON L FIXED)
+------------------------------------------------
 
 local miniButton = Instance.new("TextButton")
 miniButton.Size = UDim2.new(0,50,0,50)
 miniButton.Position = UDim2.new(0,30,0.5,-25)
-
 miniButton.BackgroundColor3 = Color3.fromRGB(18,18,20)
 miniButton.Text = ""
-
-miniButton.Visible = false
-miniButton.Parent = gui
-
-Instance.new("UICorner", miniButton).CornerRadius = UDim.new(1,0)
-
-local stroke = Instance.new("UIStroke")
-stroke.Color = ACCENT
-stroke.Thickness = 1.5
-stroke.Parent = miniButton
-
--- ICON HOLDER
-local iconHolder = Instance.new("Frame")
-iconHolder.Size = UDim2.new(0,18,0,18)
-iconHolder.Position = UDim2.new(0.5,-9,0.5,-9)
-iconHolder.BackgroundTransparency = 1
-iconHolder.Parent = miniButton
-
--- VERTICAL BAR (L shape)
-local bar1 = Instance.new("Frame")
-bar1.Size = UDim2.new(0,4,1,0)
-bar1.Position = UDim2.new(0,0,0,0)
-bar1.BackgroundColor3 = ACCENT
-bar1.BorderSizePixel = 0
-bar1.Parent = iconHolder
-
--- HORIZONTAL BAR (L shape)
-local bar2 = Instance.new("Frame")
-bar2.Size = UDim2.new(1,0,0,4)
-bar2.Position = UDim2.new(0,0,1,-4)
-bar2.BackgroundColor3 = ACCENT
-bar2.BorderSizePixel = 0
-bar2.Parent = iconHolder
-miniButton.Font = Enum.Font.GothamBlack
-miniButton.TextSize = 24
-
-miniButton.TextColor3 = ACCENT
-miniButton.BackgroundColor3 = Color3.fromRGB(18,18,20)
-
 miniButton.Visible = false
 miniButton.Parent = gui
 
@@ -211,7 +155,31 @@ miniStroke.Color = ACCENT
 miniStroke.Thickness = 1.5
 miniStroke.Parent = miniButton
 
--- DRAG SYSTEM
+-- ICON HOLDER
+local iconHolder = Instance.new("Frame")
+iconHolder.Size = UDim2.new(0,18,0,18)
+iconHolder.Position = UDim2.new(0.5,-9,0.5,-9)
+iconHolder.BackgroundTransparency = 1
+iconHolder.Parent = miniButton
+
+-- L SHAPE ICON
+local bar1 = Instance.new("Frame")
+bar1.Size = UDim2.new(0,4,1,0)
+bar1.BackgroundColor3 = ACCENT
+bar1.BorderSizePixel = 0
+bar1.Parent = iconHolder
+
+local bar2 = Instance.new("Frame")
+bar2.Size = UDim2.new(1,0,0,4)
+bar2.Position = UDim2.new(0,0,1,-4)
+bar2.BackgroundColor3 = ACCENT
+bar2.BorderSizePixel = 0
+bar2.Parent = iconHolder
+
+------------------------------------------------
+-- DRAG
+------------------------------------------------
+
 local dragging, dragStart, startPos
 
 topBar.InputBegan:Connect(function(input)
@@ -222,10 +190,8 @@ topBar.InputBegan:Connect(function(input)
 	end
 end)
 
-topBar.InputEnded:Connect(function(input)
-	if input.UserInputType == Enum.UserInputType.MouseButton1 then
-		dragging = false
-	end
+topBar.InputEnded:Connect(function()
+	dragging = false
 end)
 
 UserInputService.InputChanged:Connect(function(input)
@@ -240,17 +206,20 @@ UserInputService.InputChanged:Connect(function(input)
 	end
 end)
 
--- KEY CHECK
+------------------------------------------------
+-- KEY SYSTEM (FIXED)
+------------------------------------------------
+
 unlockBtn.MouseButton1Click:Connect(function()
 
-	local key = keyBox.Text
+	local key = string.gsub(keyBox.Text, " ", "")
 
 	status.Text = "Status : Checking..."
 	status.TextColor3 = ACCENT
 
-	task.wait(1)
+	task.wait(0.5)
 
-	if VALID_KEYS[key] then
+	if VALID_KEYS[key] == true then
 
 		status.Text = "Status : Access Granted"
 		status.TextColor3 = Color3.fromRGB(100,255,100)
@@ -262,12 +231,6 @@ unlockBtn.MouseButton1Click:Connect(function()
 		local source = game:HttpGet(SCRIPT_URL)
 		loadstring(source)()
 
-		TweenService:Create(main, TweenInfo.new(0.25), {
-			Size = UDim2.new(0,0,0,0)
-		}):Play()
-
-		task.wait(0.25)
-
 		gui:Destroy()
 
 	else
@@ -277,5 +240,3 @@ unlockBtn.MouseButton1Click:Connect(function()
 
 	end
 end)
-
--- MINIMIZE SYSTEM OPTIONAL (kalau mau dipakai nanti)
